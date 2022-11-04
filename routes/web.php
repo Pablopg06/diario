@@ -3,6 +3,7 @@
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\NoticiasController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Livewire\ShowNoticias;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,7 +18,12 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', HomeController::class)->name('home');
 
-Route::get('noticias', [NoticiasController::class,'index'])->middleware([
+/*Route::resource('noticias', NoticiasController::class)->middleware([
         'auth:sanctum',
         config('jetstream.auth_session'),
-        'verified'])->name('noticias.index');
+        'verified'])->names('noticias');*/
+
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified'])->get('noticias',ShowNoticias::class)->name('noticias.index');
